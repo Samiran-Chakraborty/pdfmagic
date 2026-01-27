@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - PDF Magic</title>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body
+    class="antialiased text-slate-800 bg-slate-50 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md border-b border-white/20 bg-white/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer group"
+                    onclick="window.location.href='index.html'">
+                    <div
+                        class="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-xl text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300">
+                        <i data-lucide="wand-2" class="h-5 w-5"></i>
+                    </div>
+                    <span
+                        class="font-bold text-2xl tracking-tight text-slate-900 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">PDF
+                        Magic</span>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html"
+                        class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Home</a>
+                    <a href="index.html#tools"
+                        class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Tools</a>
+                    <a href="about.html" class="text-sm font-bold text-indigo-600">About</a>
+                </div>
+
+                <div class="hidden md:block">
+                    <a href="index.html#tools"
+                        class="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10 hover:-translate-y-0.5">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-32 pb-20 relative flex items-center justify-center">
+        <!-- Animated Background -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+            <div
+                class="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-purple-300/30 rounded-full blur-[100px] animate-float">
+            </div>
+            <div
+                class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-300/30 rounded-full blur-[100px] animate-float-delayed">
+            </div>
+        </div>
+
+        <div class="max-w-3xl mx-auto px-6 w-full">
+            <div
+                class="glass-card rounded-[2.5rem] p-8 md:p-14 shadow-2xl relative animate-fade-in-up text-center overflow-hidden">
+                <!-- Decorative Circle -->
+                <div
+                    class="absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full opacity-10 blur-2xl">
+                </div>
+
+                <div class="relative z-10">
+                    <div
+                        class="w-24 h-24 bg-gradient-to-br from-white to-slate-100 rounded-full mx-auto mb-8 flex items-center justify-center shadow-lg border border-white/50">
+                        <i data-lucide="heart" class="w-10 h-10 text-pink-500 fill-pink-500 animate-pulse"></i>
+                    </div>
+
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
+                        Built with <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">Passion.</span>
+                    </h1>
+
+                    <div class="space-y-6 text-lg text-slate-600 leading-relaxed max-w-xl mx-auto">
+                        <p>
+                            "Hi there! I'm <span class="font-bold text-indigo-600">Samiran</span>."
+                        </p>
+                        <p>
+                            I created PDF Magic because I believe powerful tools should be free, fast, and private.
+                            This project is crafted with care, running entirely in your browser so your data stays safe.
+                        </p>
+                        <p class="font-medium text-slate-800">
+                            We hope these tools add a little magic to your workflow! ✨
+                        </p>
+                    </div>
+
+                    <div class="mt-10 flex justify-center gap-4">
+                        <a href="https://github.com/Samiran-Chakraborty" target="_blank"
+                            class="p-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#"
+                            class="p-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#"
+                            class="p-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-slate-500 font-medium">© 2026 PDF Magic. Designed for Privacy.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tools - PDF Magic</title>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body
+    class="antialiased text-slate-800 bg-slate-50 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md border-b border-white/20 bg-white/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer group"
+                    onclick="window.location.href='index.html'">
+                    <div
+                        class="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-xl text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300">
+                        <i data-lucide="wand-2" class="h-5 w-5"></i>
+                    </div>
+                    <span
+                        class="font-bold text-2xl tracking-tight text-slate-900 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">PDF
+                        Magic</span>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html"
+                        class="text-lg font-medium text-slate-600 hover:text-indigo-600 transition-colors">Home</a>
+                    <a href="tools.html" class="text-lg font-bold text-indigo-600 transition-colors">Tools</a>
+                    <a href="about.html"
+                        class="text-lg font-medium text-slate-600 hover:text-indigo-600 transition-colors">About</a>
+                </div>
+
+                <div class="hidden md:block">
+                    <!-- Empty div to balance layout if needed, or keeping CTA -->
+                    <a href="tools.html"
+                        class="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10 hover:-translate-y-0.5">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-32 pb-20 max-w-7xl mx-auto px-6 w-full">
+        <div class="text-center mb-16 animate-fade-in-up">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">Our Tools</h1>
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto">Everything you need to manage your documents securely in
+                your browser.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-up"
+            style="animation-delay: 0.1s;">
+            <!-- Image Converter -->
+            <a href="image-converter.html"
+                class="glass-card group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-pink-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-pink-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+                <div class="relative z-10">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-pink-100 to-pink-50 rounded-2xl flex items-center justify-center text-pink-600 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 shadow-sm">
+                        <i data-lucide="image" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-pink-600 transition-colors">Image
+                        Converter</h3>
+                    <p class="text-slate-500 mb-8 leading-relaxed font-medium">Convert PNG, JPG, and WebP instantly.</p>
+                    <div
+                        class="inline-flex items-center text-pink-600 font-bold group-hover:translate-x-2 transition-transform">
+                        Launch App <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Resize Tool -->
+            <a href="resize-tool.html"
+                class="glass-card group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-cyan-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+                <div class="relative z-10">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-cyan-100 to-cyan-50 rounded-2xl flex items-center justify-center text-cyan-600 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 shadow-sm">
+                        <i data-lucide="maximize" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-cyan-600 transition-colors">
+                        Resize Tool</h3>
+                    <p class="text-slate-500 mb-8 leading-relaxed font-medium">Compress images and PDFs exact sizes.</p>
+                    <div
+                        class="inline-flex items-center text-cyan-600 font-bold group-hover:translate-x-2 transition-transform">
+                        Resize Now <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- PDF to Word -->
+            <a href="pdf-to-word.html"
+                class="glass-card group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+                <div class="relative z-10">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-50 rounded-2xl flex items-center justify-center text-orange-600 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 shadow-sm">
+                        <i data-lucide="file-text" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-orange-600 transition-colors">PDF
+                        to Word</h3>
+                    <p class="text-slate-500 mb-8 leading-relaxed font-medium">Extract text from PDFs to Word.</p>
+                    <div
+                        class="inline-flex items-center text-orange-600 font-bold group-hover:translate-x-2 transition-transform">
+                        Convert PDF <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Word to PDF -->
+            <a href="word-to-pdf.html"
+                class="glass-card group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+                <div class="relative z-10">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 shadow-sm">
+                        <i data-lucide="file" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Word
+                        to PDF</h3>
+                    <p class="text-slate-500 mb-8 leading-relaxed font-medium">Turn Word docs into professional PDFs.
+                    </p>
+                    <div
+                        class="inline-flex items-center text-blue-600 font-bold group-hover:translate-x-2 transition-transform">
+                        Launch <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-slate-500 font-medium">© 2026 PDF Magic. Designed for Privacy.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

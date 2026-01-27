@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resize Tool - PDF Magic</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Libraries -->
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+</head>
+
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen">
+
+    <nav class="bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html"
+                    class="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors">
+                    <i data-lucide="arrow-left" class="h-5 w-5"></i>
+                    <span class="font-medium">Back to Home</span>
+                </a>
+                <span class="font-bold text-xl text-cyan-600">Resize Tool</span>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 md:p-12 text-center">
+
+            <div class="mb-8">
+                <div
+                    class="w-20 h-20 bg-cyan-100 rounded-2xl flex items-center justify-center mx-auto mb-6 text-cyan-600">
+                    <i data-lucide="minimize-2" class="h-10 w-10"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-slate-900 mb-2">Resize Image or PDF</h1>
+                <p class="text-slate-500">Compress huge files to your exact target size.</p>
+            </div>
+
+            <!-- Upload Zone -->
+            <div id="upload-zone"
+                class="rounded-2xl p-10 cursor-pointer mb-8 group hover:bg-cyan-50/50 border-2 border-dashed border-slate-200 hover:border-cyan-300 transition-all">
+                <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp, application/pdf"
+                    class="hidden">
+                <div class="pointer-events-none">
+                    <i data-lucide="upload-cloud"
+                        class="h-12 w-12 text-slate-400 mx-auto mb-4 group-hover:text-cyan-500 transition-colors"></i>
+                    <p class="text-lg font-medium text-slate-700 mb-1">Click to upload or drag and drop</p>
+                    <p class="text-sm text-slate-400">Supported: PDF, PNG, JPG, WebP</p>
+                </div>
+            </div>
+
+            <!-- Editor Area -->
+            <div id="editor-section" class="hidden text-left max-w-2xl mx-auto">
+
+                <!-- File Header -->
+                <div class="bg-cyan-50 p-4 rounded-xl border border-cyan-100 flex items-center justify-between mb-6">
+                    <div>
+                        <p class="text-xs font-bold text-cyan-600 uppercase tracking-wide mb-1">Original File</p>
+                        <p id="file-name" class="font-medium text-slate-900 truncate max-w-[200px]"></p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <p id="file-size" class="text-xl font-bold text-cyan-700"></p>
+                        </div>
+                        <button id="remove-btn"
+                            class="p-2 bg-white rounded-full text-slate-400 hover:text-red-500 shadow-sm border border-slate-200 hover:border-red-200 transition-all">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Controls Container -->
+                <div id="controls-container" class="space-y-6">
+
+                    <!-- Image Preview (Image Only) -->
+                    <div id="image-preview-container"
+                        class="hidden border rounded-lg p-2 bg-slate-100 flex justify-center">
+                        <img id="image-preview" src="" alt="Preview" class="max-h-64 object-contain">
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            <i data-lucide="settings-2" class="w-5 h-5 text-cyan-600"></i> Settings
+                        </h3>
+
+                        <!-- Image Settings -->
+                        <div id="image-settings" class="hidden">
+                            <div class="mb-6">
+                                <label class="block text-sm font-bold text-slate-900 mb-2">Target File Size (KB)</label>
+                                <div class="relative">
+                                    <input type="number" id="target-kb" value="50"
+                                        class="w-full pl-4 pr-12 py-3 border-2 border-cyan-100 rounded-xl focus:border-cyan-500 focus:ring-0 text-lg font-medium outline-none">
+                                    <span
+                                        class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium">KB</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PDF Settings -->
+                        <div id="pdf-settings" class="hidden">
+                            <div class="mb-6">
+                                <label class="block text-sm font-bold text-slate-900 mb-4">Compression Level</label>
+                                <input type="range" id="pdf-quality" min="0.1" max="1.0" step="0.1" value="0.7"
+                                    class="w-full accent-cyan-600 h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer">
+                                <div class="flex justify-between text-xs text-slate-500 mt-2 font-medium">
+                                    <span>Max Compression</span>
+                                    <span id="pdf-quality-display" class="text-cyan-600 font-bold">70%</span>
+                                    <span>High Quality</span>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-yellow-50 p-4 rounded-lg border border-yellow-100 text-xs text-yellow-800 mb-6">
+                                Note: This converts PDF pages to images. Text will not be selectable.
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="process-btn"
+                        class="w-full bg-cyan-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-cyan-700 transition-all shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2">
+                        <i data-lucide="loader-2" id="process-icon" class="hidden animate-spin"></i>
+                        <span id="process-text">Compress File</span>
+                    </button>
+
+                </div>
+
+                <!-- Result Area -->
+                <div id="result-area"
+                    class="hidden mt-8 bg-green-50 p-6 rounded-xl border border-green-100 text-center animate-fade-in">
+                    <div
+                        class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2 text-green-600">
+                        <i data-lucide="check" class="w-6 h-6"></i>
+                    </div>
+                    <p class="font-bold text-green-800 text-lg mb-1">Compression Complete!</p>
+                    <p class="text-green-700 mb-4">New Size: <strong id="new-size-display"></strong></p>
+                    <a id="download-link" href="#"
+                        class="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                        <i data-lucide="download" class="w-4 h-4"></i> Download File
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        const { PDFDocument } = PDFLib;
+
+        const uploadZone = document.getElementById('upload-zone');
+        const fileInput = document.getElementById('file-input');
+        const editorSection = document.getElementById('editor-section');
+        const fileName = document.getElementById('file-name');
+        const fileSize = document.getElementById('file-size');
+        const removeBtn = document.getElementById('remove-btn');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const imageSettings = document.getElementById('image-settings');
+        const pdfSettings = document.getElementById('pdf-settings');
+        const targetKbInput = document.getElementById('target-kb');
+        const pdfQualityInput = document.getElementById('pdf-quality');
+        const pdfQualityDisplay = document.getElementById('pdf-quality-display');
+        const processBtn = document.getElementById('process-btn');
+        const processIcon = document.getElementById('process-icon');
+        const processText = document.getElementById('process-text');
+        const resultArea = document.getElementById('result-area');
+        const newSizeDisplay = document.getElementById('new-size-display');
+        const downloadLink = document.getElementById('download-link');
+
+        let currentFile = null;
+        let fileType = null; // 'image' or 'pdf'
+
+        // File Handling
+        uploadZone.addEventListener('click', () => fileInput.click());
+        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('bg-cyan-50'); });
+        uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('bg-cyan-50'));
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('bg-cyan-50');
+            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) handleFile(e.target.files[0]);
+        });
+
+        function formatBytes(bytes, decimals = 1) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+
+        function handleFile(file) {
+            currentFile = file;
+            fileName.textContent = file.name;
+            fileSize.textContent = formatBytes(file.size);
+
+            // Reset UI
+            resultArea.classList.add('hidden');
+            imagePreviewContainer.classList.add('hidden');
+            imageSettings.classList.add('hidden');
+            pdfSettings.classList.add('hidden');
+
+            if (file.type.startsWith('image/')) {
+                fileType = 'image';
+                imagePreview.src = URL.createObjectURL(file);
+                imagePreviewContainer.classList.remove('hidden');
+                imageSettings.classList.remove('hidden');
+
+                // Set initial target KB
+                const kb = Math.round(file.size / 1024);
+                targetKbInput.value = kb > 100 ? 100 : kb;
+
+            } else if (file.type === 'application/pdf') {
+                fileType = 'pdf';
+                pdfSettings.classList.remove('hidden');
+            } else {
+                alert('Unsupported file type.');
+                return;
+            }
+
+            uploadZone.classList.add('hidden');
+            editorSection.classList.remove('hidden');
+        }
+
+        removeBtn.addEventListener('click', () => {
+            currentFile = null;
+            fileInput.value = '';
+            uploadZone.classList.remove('hidden');
+            editorSection.classList.add('hidden');
+        });
+
+        pdfQualityInput.addEventListener('input', (e) => {
+            pdfQualityDisplay.textContent = Math.round(e.target.value * 100) + '%';
+        });
+
+        // Processing Logic
+        processBtn.addEventListener('click', async () => {
+            if (!currentFile) return;
+
+            processBtn.disabled = true;
+            processIcon.classList.remove('hidden');
+            processText.textContent = 'Processing...';
+
+            try {
+                let blob = null;
+                let filename = 'compressed';
+
+                if (fileType === 'image') {
+                    blob = await processImage();
+                    filename = `min-${currentFile.name}`;
+                } else if (fileType === 'pdf') {
+                    blob = await processPdf();
+                    filename = `compressed-${currentFile.name}`;
+                }
+
+                if (blob) {
+                    const url = URL.createObjectURL(blob);
+                    downloadLink.href = url;
+                    downloadLink.download = filename;
+                    newSizeDisplay.textContent = formatBytes(blob.size);
+                    resultArea.classList.remove('hidden');
+                }
+
+            } catch (error) {
+                console.error(error);
+                alert('Error processing file: ' + error.message);
+            }
+
+            processBtn.disabled = false;
+            processIcon.classList.add('hidden');
+            processText.textContent = 'Compress File';
+        });
+
+        async function processImage() {
+            const targetBytes = parseInt(targetKbInput.value) * 1024;
+            const img = new Image();
+            img.src = imagePreview.src;
+            await new Promise(r => img.onload = r);
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            let quality = 0.9;
+            let blob = null;
+            let type = currentFile.type === 'image/png' ? 'image/jpeg' : currentFile.type;
+
+            // Iterative compression
+            for (let i = 0; i < 10; i++) {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+
+                blob = await new Promise(r => canvas.toBlob(r, type, quality));
+
+                if (blob.size <= targetBytes) break;
+                quality -= 0.1;
+                if (quality < 0.1) break;
+            }
+            return blob;
+        }
+
+        async function processPdf() {
+            const arrayBuffer = await currentFile.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+            const newPdfDoc = await PDFDocument.create();
+            const quality = parseFloat(pdfQualityInput.value);
+
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                await page.render({ canvasContext: context, viewport: viewport }).promise;
+
+                const imgDataUrl = canvas.toDataURL('image/jpeg', quality);
+                const imgBytes = await fetch(imgDataUrl).then(res => res.arrayBuffer());
+                const embeddedImage = await newPdfDoc.embedJpg(imgBytes);
+
+                const newPage = newPdfDoc.addPage([viewport.width, viewport.height]);
+                newPage.drawImage(embeddedImage, {
+                    x: 0,
+                    y: 0,
+                    width: viewport.width,
+                    height: viewport.height,
+                });
+            }
+
+            const pdfBytes = await newPdfDoc.save();
+            return new Blob([pdfBytes], { type: 'application/pdf' });
+        }
+    </script>
+</body>
+
+</html>
