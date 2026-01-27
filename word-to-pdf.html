@@ -141,13 +141,35 @@
         }
 
         downloadBtn.addEventListener('click', () => {
-            const element = documentPreview;
+            // Clone the element to remove height restrictions for the PDF generation
+            const originalElement = documentPreview;
+            const clone = originalElement.cloneNode(true);
+            
+            // Apply styles to the clone to ensure full height is captured
+            clone.style.maxHeight = 'none';
+            clone.style.overflow = 'visible';
+            clone.style.height = 'auto';
+            clone.style.width = originalElement.offsetWidth + 'px'; // Maintain width
+            
+            // Position it off-screen but visible to the rendering engine
+            clone.style.position = 'absolute';
+            clone.style.left = '-9999px';
+            clone.style.top = '0';
+            document.body.appendChild(clone);
+
             const opt = {
-                margin: 1,
+                margin: [0.5, 0.5],
                 filename: 'converted-document.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                html2canvas: { 
+                    scale: 2, 
+                    useCORS: true,
+                    logging: false,
+                    scrollY: 0,
+                    windowHeight: clone.scrollHeight // Ensure full height is captured
+                },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
             };
 
             // Simple interaction feedback
@@ -155,9 +177,16 @@
             downloadBtn.innerText = 'Generating...';
             downloadBtn.disabled = true;
 
-            html2pdf().set(opt).from(element).save().then(() => {
+            html2pdf().set(opt).from(clone).save().then(() => {
                 downloadBtn.innerHTML = originalText;
                 downloadBtn.disabled = false;
+                document.body.removeChild(clone); // Clean up
+            }).catch(err => {
+                console.error(err);
+                downloadBtn.innerHTML = originalText;
+                downloadBtn.disabled = false;
+                document.body.removeChild(clone); // Clean up on error too
+                alert('An error occurred during PDF generation.');
             });
         });
     </script>

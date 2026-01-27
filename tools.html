@@ -21,11 +21,17 @@
                     },
                     animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
                     },
                     keyframes: {
                         fadeInUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
                         }
                     }
                 }
@@ -80,18 +86,29 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-grow pt-32 pb-20 max-w-7xl mx-auto px-6 w-full">
+    <main class="flex-grow pt-32 pb-20 max-w-7xl mx-auto px-6 w-full relative overflow-hidden">
+        <!-- Animated Background -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+            <div
+                class="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-purple-300/30 rounded-full blur-[100px] animate-float">
+            </div>
+            <div
+                class="absolute top-[20%] right-[-10%] w-[400px] h-[600px] bg-indigo-300/30 rounded-full blur-[100px] animate-float-delayed">
+            </div>
+            <div
+                class="absolute bottom-[-10%] left-[30%] w-[600px] h-[400px] bg-pink-200/40 rounded-full blur-[100px] animate-float">
+            </div>
+        </div>
         <div class="text-center mb-16 animate-fade-in-up">
             <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">Our Tools</h1>
             <p class="text-xl text-slate-600 max-w-2xl mx-auto">Everything you need to manage your documents securely in
                 your browser.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-up"
-            style="animation-delay: 0.1s;">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Image Converter -->
-            <a href="image-converter.html"
-                class="glass-card group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-pink-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+            <a href="image-converter.html" style="animation-delay: 0.1s"
+                class="glass-card animate-fade-in-up group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-pink-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-pink-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 </div>
@@ -111,8 +128,8 @@
             </a>
 
             <!-- Resize Tool -->
-            <a href="resize-tool.html"
-                class="glass-card group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+            <a href="resize-tool.html" style="animation-delay: 0.2s"
+                class="glass-card animate-fade-in-up group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-cyan-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 </div>
@@ -132,8 +149,8 @@
             </a>
 
             <!-- PDF to Word -->
-            <a href="pdf-to-word.html"
-                class="glass-card group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+            <a href="pdf-to-word.html" style="animation-delay: 0.3s"
+                class="glass-card animate-fade-in-up group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 </div>
@@ -153,8 +170,8 @@
             </a>
 
             <!-- Word to PDF -->
-            <a href="word-to-pdf.html"
-                class="glass-card group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+            <a href="word-to-pdf.html" style="animation-delay: 0.4s"
+                class="glass-card animate-fade-in-up group relative rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 </div>
