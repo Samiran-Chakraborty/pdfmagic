@@ -93,10 +93,16 @@
             <div id="preview-section" class="hidden text-left">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="font-semibold text-slate-900">Document Preview</h3>
-                    <button id="download-btn"
-                        class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2">
-                        <i data-lucide="download"></i> Download PDF
-                    </button>
+                    <div class="flex items-center gap-3">
+                        <button id="remove-btn"
+                            class="p-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 transition-colors flex items-center gap-2 text-sm font-medium">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i> Remove
+                        </button>
+                        <button id="download-btn"
+                            class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2">
+                            <i data-lucide="download"></i> Download PDF
+                        </button>
+                    </div>
                 </div>
                 <div id="document-preview"
                     class="bg-white border border-slate-200 p-8 shadow-sm min-h-[500px] overflow-y-auto max-h-[800px] prose max-w-none">
@@ -120,7 +126,16 @@
         const previewSection = document.getElementById('preview-section');
         const documentPreview = document.getElementById('document-preview');
         const downloadBtn = document.getElementById('download-btn');
+        const removeBtn = document.getElementById('remove-btn');
         const loading = document.getElementById('loading');
+
+        // Remove Button Logic
+        removeBtn.addEventListener('click', () => {
+            fileInput.value = ''; // Clear file input
+            documentPreview.innerHTML = ''; // Clear preview
+            previewSection.classList.add('hidden'); // Hide editor
+            dropZone.classList.remove('hidden'); // Show upload zone
+        });
 
         // Drag & Drop Handlers
         dropZone.addEventListener('click', () => fileInput.click());
